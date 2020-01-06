@@ -1,10 +1,5 @@
 import _ from 'lodash'
-import { nijou, hoge } from './utilities'
-import Lion from './utilities'
-
-console.log(nijou(11))
-console.log(hoge)
-console.log(Lion.say())
+import './style.css'
 
 const component = () => {
     const element = document.createElement('div');
@@ -14,3 +9,4 @@ const component = () => {
 }
 
 document.body.appendChild(component());
+document.body.classList.add('haikei')

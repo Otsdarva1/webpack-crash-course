@@ -20,6 +20,10 @@ module.exports = {
                 // ローダーは逆順に読み込まれる。styleを先に読み込んでほしいのでcss-loaderは最後に書く
                 use: ['style-loader', 'css-loader']
             },
+            {
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            },
             // 画像関連
             {
                 // ?: 前の1文字があってもなくても対象

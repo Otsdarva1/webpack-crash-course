@@ -1,6 +1,7 @@
 const path = require('path')
 const outputpath = path.resolve(__dirname, 'dist')
 console.log({outputpath})
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 
 module.exports = {
     // webpackでバンドルする対象のファイル
@@ -13,6 +14,14 @@ module.exports = {
     },
     module: {
         rules: [
+            // babel
+            {
+                // jsファイルをbabel-loaderのトランスパイルの対象となる
+                test: /\.jsx?$/,
+                // node_modules配下のファイルは除く（自分で書いたjsのみを対象とする）
+                exclude: /node_modules/,
+                loader: "babel-loader"
+            },
             // css関連
             {
                 // 全cssファイルを指定
@@ -36,6 +45,10 @@ module.exports = {
                     limit: 2048,
                     name: './images/[name].[ext]'
                 }
+            },
+            {
+                test: /\.html$/,
+                loader: 'html-loader'
             }
         ]
     },
@@ -43,5 +56,11 @@ module.exports = {
         // ドキュメントルートにdistディレクトリの絶対パスを指定。
         // webpack-dev-server起動時にdist/index.htmlにアクセスする
         contentBase: outputpath
-    }
+    },
+    plugins: [
+        new HtmlWebPackPlugin({
+            template: './src/index.html',
+            filename: './index.html'
+        })
+    ]
 }

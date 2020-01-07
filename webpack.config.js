@@ -2,6 +2,7 @@ const path = require('path')
 const outputpath = path.resolve(__dirname, 'dist')
 console.log({outputpath})
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     // webpackでバンドルする対象のファイル
@@ -24,14 +25,12 @@ module.exports = {
             },
             // css関連
             {
-                // 全cssファイルを指定
-                test: /\.css$/,
-                // ローダーは逆順に読み込まれる。styleを先に読み込んでほしいのでcss-loaderは最後に書く
-                use: ['style-loader', 'css-loader']
-            },
-            {
-                test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                test: /\.(sc|c)ss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
+                ]
             },
             // 画像関連
             {
@@ -61,6 +60,9 @@ module.exports = {
         new HtmlWebPackPlugin({
             template: './src/index.html',
             filename: './index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].[hash].css'
         })
     ]
 }
